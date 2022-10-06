@@ -9,6 +9,38 @@
 <body>
     <h1>Leitor</h1>
 
-    <script src="index.js"></script>
+    <input type="file" id="input">
+    <script>
+        const file = document.querySelector('#input');
+
+        file.addEventListener('change', e => {
+            leArquivoDoInput(e.target);
+        });
+
+        function adicionaPreview(url) {
+            const object = document.createElement('object');
+            object.data = `${url}#toolbar=0`;
+            object.type = 'application/pdf';
+            object.height = '800';
+            object.width = '500';
+
+            document.body.appendChild(object);
+        }
+
+        function leArquivoBlob(arquivo) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                console.log(e);
+                adicionaPreview(e.target.result);
+            };
+            reader.readAsDataURL(arquivo);
+        }
+
+        function leArquivoDoInput(input) {
+            const arquivo = input.files[0] || undefined;
+
+            leArquivoBlob(arquivo);
+        }
+    </script>
 </body>
 </html>
