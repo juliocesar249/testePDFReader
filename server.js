@@ -1,9 +1,20 @@
 const express = require('express');
 const app = express();
 
-app.get('/', (request, response) => {
-    response.sendFile('./index.html');
-})
+app.get('/', function(req, res){
+    var options = {
+        root: __dirname
+    };
+     
+    var fileName = 'index.html';
+    res.sendFile(fileName, options, function (err) {
+        if (err) {
+            next(err);
+        } else {
+            console.log('Sent:', fileName);
+        }
+    });
+});
 
 const PORT = process.env.PORT || 5000;
 
